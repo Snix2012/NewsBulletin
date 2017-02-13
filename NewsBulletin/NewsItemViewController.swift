@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  NewsItemViewController.swift
 //  NewsBulletin
 //
 //  Created by claire.roughan on 11/02/2017.
@@ -11,9 +11,9 @@ import Alamofire
 
 
 
-class ViewController: UICollectionViewController, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+class NewsItemViewController: UICollectionViewController, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
        
-    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0)
     fileprivate let itemsPerRow: CGFloat = 2
     fileprivate let reuseIdentifier = "NewsCell"
     fileprivate var selectedArticle:NewsArticle? = nil
@@ -132,7 +132,7 @@ class ViewController: UICollectionViewController, UIViewControllerTransitioningD
 
 
 
-extension ViewController {
+extension NewsItemViewController {
     
     // MARK: - UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -153,26 +153,51 @@ extension ViewController {
                                                       for: indexPath) as! NewsItemCollectionViewCell
         
         let aNewsArticle = newsDataArr[indexPath.row]
+        
+       
+        
         cell.titleLabel.text = aNewsArticle.title
         cell.sectionLabel.text = aNewsArticle.sectionName
+        
+        cell.backgroundColor =  getCellSectionColour(sectionName: aNewsArticle.sectionName).withAlphaComponent(0.2)
         
         return cell
     }
     
     
-    // MARK:- UICollectionViewDelegate Methods
+    func getCellSectionColour(sectionName:String) -> UIColor {
+        
+        var cellcolour:UIColor?
+        
+        if sectionName.lowercased().range(of:"world") != nil{
+            cellcolour = NewsSection.world.sectionColour
+        }
+        else if sectionName.lowercased().range(of:"society") != nil{
+            cellcolour = NewsSection.society.sectionColour
+        }
+        else if sectionName.lowercased().range(of:"opinion") != nil{
+            cellcolour = NewsSection.opinion.sectionColour
+        }
+        else if sectionName.lowercased().range(of:"life") != nil{
+            cellcolour = NewsSection.life.sectionColour
+        }
+        else {
+            cellcolour = NewsSection.other.sectionColour
+        }
+
+        return cellcolour!
+    }
+    
+    
+    // MARK:- UICollectionViewDelegate
     
      override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
        
        self.selectedArticle = self.newsDataArr[indexPath.row]
        self.performSegue(withIdentifier: "viewNewsSegue", sender: self)
     }
-}
-
-
-
-
-extension ViewController : UICollectionViewDelegateFlowLayout {
+    
+    // MARK:- UICollectionViewLayout
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -192,8 +217,10 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
         return sectionInsets
     }
     
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
+
 }
+
