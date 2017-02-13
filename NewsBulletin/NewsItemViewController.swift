@@ -47,10 +47,8 @@ class NewsItemViewController: UICollectionViewController, UIViewControllerTransi
         
         Alamofire.request(url).responseJSON { response in
             
-            print("URL= \(response.request!)")  // original URL request
-            print(response.response!) // HTTP URL response
-            print(response.data!)     // server data
-            print(response.result)   // result of response serialization
+            print("URL= \(response.request!)")
+            print(response.result)
 
             if response.result.isSuccess {
                 
@@ -84,23 +82,19 @@ class NewsItemViewController: UICollectionViewController, UIViewControllerTransi
         do {
             var myJson =  try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers)as? JSONDictionary
             if let response = myJson?["response"]  as? JSONDictionary {
-               // print(results)
                 
                 if let results = response["results"] {
                     
                     for i in 0..<results.count {
-                        let item = results[i] as! JSONDictionary
-                        
+                        let item = (results as! NSArray)[i] as! JSONDictionary
                         let title = item["webTitle"] as? String
                         let newsArticle = item["webUrl"] as? String
                         let section = item["sectionName"] as? String
 
                         let newsStory = NewsArticle.init(section:section!, title:title!, article:newsArticle!)
-                        print(newsStory.sectionName)
                         
                         newsDataArr.append(newsStory)
                     }
-                     print(newsDataArr.count)
                 }
             }
         } catch  {
