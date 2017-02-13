@@ -22,9 +22,7 @@ class NewsReaderViewController: UIViewController, UIWebViewDelegate {
         showActivityIndicator()
 
         let url = NSURL (string: urlString!)
-        
-        print("\n\n \(urlString)\n\n")
-        
+             
         let requestObj = URLRequest(url: url! as URL)
         webView.loadRequest(requestObj)
     }
@@ -37,12 +35,6 @@ class NewsReaderViewController: UIViewController, UIWebViewDelegate {
     
     
     func showActivityIndicator() {
-        
-//        self.activityIndicatorView = ActivityIndicatorView(title: "Loading news article ...",
-//                                                           center: self.view.center,
-//                                                           bgColour: UIColor(red: 126.0/255.0, green: 125.0/255.0, blue: 170.0/255.0, alpha: 0.5),
-//                                                           textColour:UIColor.purple)
-        
         
          self.activityIndicatorView = ActivityIndicatorView(title: "Loading news article ...",
                                                             center: self.view.center,

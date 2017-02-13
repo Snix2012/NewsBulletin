@@ -21,14 +21,11 @@ class ActivityIndicatorView: UIView {
     }
     
 
-    // init(title: String, center: CGPoint, width: CGFloat = 200.0, height: CGFloat = 50.0, bgColour: UIColor, textColour:UIColor)
     init(title: String, center: CGPoint, width: CGFloat?, height: CGFloat = 50.0, bgColour: UIColor, textColour:UIColor)
     {
         
         let theWidth = width ?? 200
-       // let theHeight = height ?? 50
-        
-        
+              
         self.title = title
        
         let x = center.x - theWidth/2.0
