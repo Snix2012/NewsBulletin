@@ -21,15 +21,20 @@ class ActivityIndicatorView: UIView {
     }
     
 
-    
-    init(title: String, center: CGPoint, width: CGFloat = 200.0, height: CGFloat = 50.0, bgColour: UIColor, textColour:UIColor)
+    // init(title: String, center: CGPoint, width: CGFloat = 200.0, height: CGFloat = 50.0, bgColour: UIColor, textColour:UIColor)
+    init(title: String, center: CGPoint, width: CGFloat?, height: CGFloat = 50.0, bgColour: UIColor, textColour:UIColor)
     {
-        self.title = title
         
-        let x = center.x - width/2.0
+        let theWidth = width ?? 200
+       // let theHeight = height ?? 50
+        
+        
+        self.title = title
+       
+        let x = center.x - theWidth/2.0
         let y = center.y - height/2.0
         
-        self.view = UIView(frame: CGRect(x: x, y: y, width: width, height: height))
+        self.view = UIView(frame: CGRect(x: x, y: y, width: theWidth, height: height))
         self.view.backgroundColor = bgColour
         self.view.layer.cornerRadius = 10
         
@@ -40,6 +45,8 @@ class ActivityIndicatorView: UIView {
         let titleLabel = UILabel(frame: CGRect(x: 60, y: 0, width: 200, height: 50))
         titleLabel.text = title
         titleLabel.textColor = textColour
+        titleLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        titleLabel.numberOfLines = 0
         
         self.view.addSubview(self.activityIndicator)
         self.view.addSubview(titleLabel)
